@@ -22,7 +22,7 @@ public class Panel_Platform extends JPanel
 
     private static boolean desktopSelected;
     private static boolean serverSelected;
-
+    
     public Panel_Platform()
     {
         setLayout(new GridLayout(0, 4));
@@ -72,7 +72,7 @@ public class Panel_Platform extends JPanel
                     Panel_Logon.enableUsernameField();
                     Panel_Logon.enablePasswordField();
                     Panel_Logon.setURLTextfield("http://hana:8000/sap/bi/launchpad/");
-                    Panel_Logon.setUsernameTextfield("testuser1");
+                    Panel_Logon.setUsernameTextfield("system");
                     Panel_Logon.setPasswordTextfield("BOsap123");
                     System.out.println("DSK -- desktop = " + desktopSelected + ", server = " + serverSelected);
                 }

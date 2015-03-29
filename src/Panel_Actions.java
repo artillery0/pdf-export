@@ -39,18 +39,19 @@ public class Panel_Actions extends JPanel
                 {
                     fileWriter = new PrintWriter(manifestPath, "UTF-8");
                 }
-                catch (FileNotFoundException e2)
+                catch (FileNotFoundException error)
                 {
-                    e2.printStackTrace();
+                    error.printStackTrace();
                 }
-                catch (UnsupportedEncodingException e2)
+                catch (UnsupportedEncodingException error)
                 {
-                    e2.printStackTrace();
+                    error.printStackTrace();
                 }
 
 
                 int xmlIndex = 0;
                 boolean flag = true;
+                fileWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
                 for (File fileEntry : folder.listFiles())
                 {
                     if (!fileEntry.isDirectory() && fileEntry.getName().endsWith(".lums"))
@@ -90,16 +91,18 @@ public class Panel_Actions extends JPanel
 
             private void printEmptyMsg(PrintWriter fileWriter)
             {
-                fileWriter.println("################################################################");
+                fileWriter.println("<!--");
+                fileWriter.println("##################################################################");
                 fileWriter.println();
                 fileWriter.println();
                 fileWriter.println();
                 fileWriter.println("\t\tNO LUMS FILE FOUND IN THIS PATH!");
-                fileWriter.println("\t\tPATH --> " + Panel_SourceFolder.getSrcFolderPath() + "\\");
+                fileWriter.println("\t\tPATH = " + Panel_SourceFolder.getSrcFolderPath());
                 fileWriter.println();
                 fileWriter.println();
                 fileWriter.println();
-                fileWriter.println("################################################################");
+                fileWriter.println("##################################################################");
+                fileWriter.println("-->");
             }
         });
 
@@ -133,17 +136,29 @@ public class Panel_Actions extends JPanel
                 // System.out.println("IE");
                 // }
                 // }
+                System.out.println("==============================");
+                
+                System.out.println("platform = " + Setting.getPlatform());
                 System.out.println("------------------------------");
-                System.out.println("appendix = " + Setting.getAppendixOption());
-                System.out.println("mt option = " + Setting.getMtOption());
-                System.out.println("password = " + Setting.getPassword());
-                System.out.println("pdf down path = " + Setting.getPdfExportFolderPath());
-                System.out.println("lums folder = " + Setting.getTestAssetFolderPath());
-                System.out.println("number of threads = " + Setting.getThreadNumbers());
+                
                 System.out.println("url = " + Setting.getURL());
                 System.out.println("username = " + Setting.getUsername());
+                System.out.println("password = " + Setting.getPassword());
+                System.out.println("------------------------------");
+                
                 System.out.println("browser = " + Setting.getBrowser());
-                System.out.println("platform = " + Setting.getPlatform());
+                System.out.println("------------------------------");
+                
+                System.out.println("appendix = " + Setting.getAppendixOption());
+                System.out.println("mt option = " + Setting.getMtOption());
+                System.out.println("number of threads = " + Setting.getThreadNumbers());
+                System.out.println("------------------------------");
+                
+                System.out.println("pdf down path = " + Setting.getPdfExportFolderPath());
+                System.out.println("------------------------------");
+                
+                System.out.println("lums folder = " + Setting.getTestAssetFolderPath());
+                
                 System.out.println("-------------------------------");
 
             }

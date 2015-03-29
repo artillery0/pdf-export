@@ -20,8 +20,8 @@ public class Panel_PDF_Folder extends JPanel
     {
         pathString = "Path: ";
         setLayout(new GridLayout(2, 0));
-        pdfOutPathLabel = new JLabel(pathString + System.getProperty("user.home") + "\\Desktop\\");
-        downloadPdfPath = System.getProperty("user.home") + "\\Desktop\\";
+        pdfOutPathLabel = new JLabel(pathString + System.getProperty("user.home") + "\\Desktop");
+        downloadPdfPath = System.getProperty("user.home") + "\\Desktop";
         changeFilePathBtn = new JButton("Select destination folder");
 
         changeFilePathBtn.addActionListener(new ActionListener()
@@ -43,7 +43,7 @@ public class Panel_PDF_Folder extends JPanel
                     // System.out.println("getSelectedFile() : " +
                     // fileChooser.getSelectedFile());
                     downloadPdfPath = fileChooser.getSelectedFile().toString();
-                    pdfOutPathLabel.setText(pathString + downloadPdfPath + "\\");
+                    pdfOutPathLabel.setText(pathString + downloadPdfPath);
                 }
 
             }

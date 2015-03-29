@@ -22,7 +22,7 @@ public class Panel_SourceFolder extends JPanel
 
         curPath = "Path: ";
         
-        srcFolderPath = System.getProperty("user.home") + "\\Desktop\\";
+        srcFolderPath = System.getProperty("user.home") + "\\Desktop";
         srcFolderLabel = new JLabel(curPath + srcFolderPath);
         btnChangeSourceFolder = new JButton("Select test asset folder");
 
@@ -44,7 +44,7 @@ public class Panel_SourceFolder extends JPanel
                     // System.out.println("getSelectedFile() : " +
                     // fileChooser.getSelectedFile());
                     srcFolderPath = fileChooser.getSelectedFile().toString();
-                    srcFolderLabel.setText(curPath + srcFolderPath + "\\");
+                    srcFolderLabel.setText(curPath + srcFolderPath);
                 }
 
             }

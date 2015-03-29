@@ -23,7 +23,7 @@ public class FileRead implements Runnable
     public static void main(String[] args)
     {
         List<String> stories = new ArrayList<String>();
-        final File folder = new File("C:\\Users\\I844337\\Desktop\\archive");
+        final File folder = new File("C:\\Users\\alexlu\\Desktop\\archive");
         for (final File fileEntry : folder.listFiles())
         {
             if (!fileEntry.isDirectory() && fileEntry.getName().endsWith(".lums"))
@@ -39,6 +39,17 @@ public class FileRead implements Runnable
         }
 
         numberOfTotalStories = stories.size();
+        if (numberOfThread > numberOfTotalStories){
+            try
+            {
+                throw new Exception("Thread more than stories");
+            }
+            catch (Exception e)
+            {
+                System.out.println("thread more than stoires");
+                System.exit(1);
+            }
+        }
         maxPerThread = (int) Math.ceil((float) numberOfTotalStories / numberOfThread);
 
         storiesArr = new String[numberOfTotalStories];
