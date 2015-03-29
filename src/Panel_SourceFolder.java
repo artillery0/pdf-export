@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class Panel_SourceFolder extends JPanel
 {
     private static JLabel srcFolderLabel;

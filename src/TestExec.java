@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.server.ExportException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -9,14 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestExec implements Runnable
 {
@@ -87,7 +83,7 @@ public class TestExec implements Runnable
 
 
 
-        long timeOutInSeconds = 10;
+        // long timeOutInSeconds = 10;
         // WebDriverWait driverWait = new WebDriverWait(webDriver, timeOutInSeconds);
         webDriver.get("http://localhost:8081/h5v2/index.html");
 

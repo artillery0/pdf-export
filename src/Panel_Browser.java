@@ -1,6 +1,6 @@
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URL;
 
@@ -10,9 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import org.apache.commons.collections.list.SetUniqueList;
 
-
+@SuppressWarnings("serial")
 public class Panel_Browser extends JPanel
 {
     private static JRadioButton chromeBtn;
@@ -27,8 +26,9 @@ public class Panel_Browser extends JPanel
     private static ImageIcon ieIcon;
     private static JLabel labelChrome;
     private static JLabel labelIE;
-    
-    private static boolean chromeBrowserSelected;
+
+    private static boolean chromeSelected;
+    private static boolean ieSelected;
 
     public Panel_Browser() throws IOException
     {
@@ -38,36 +38,19 @@ public class Panel_Browser extends JPanel
         ieBtn = new JRadioButton("IE");
 
         chromeBtn.setSelected(true);
-        chromeBrowserSelected = true;
+        chromeSelected = true;
+        ieSelected = false;
 
         btnGroup = new ButtonGroup();
         btnGroup.add(chromeBtn);
         btnGroup.add(ieBtn);
 
         chromeImageURL = this.getClass().getResource("chrome.png");
-
-        if (chromeImageURL == null)
-        {
-            chromeIcon = new ImageIcon("img/chrome.png");
-        }
-        else
-        {
-            chromeIcon = new ImageIcon(chromeImageURL);
-        }
-
+        chromeIcon = new ImageIcon(chromeImageURL);
         chromeIcon = new ImageIcon(chromeIcon.getImage().getScaledInstance(imageSize, imageSize, java.awt.Image.SCALE_SMOOTH));
 
         ieImageURL = this.getClass().getResource("ie.png");
-
-        if (chromeImageURL == null)
-        {
-            ieIcon = new ImageIcon("img/ie.png");
-        }
-        else
-        {
-            ieIcon = new ImageIcon(ieImageURL);
-        }
-
+        ieIcon = new ImageIcon(ieImageURL);
         ieIcon = new ImageIcon(ieIcon.getImage().getScaledInstance(imageSize, imageSize, java.awt.Image.SCALE_SMOOTH));
 
         labelChrome = new JLabel(chromeIcon, JLabel.CENTER);
@@ -76,26 +59,58 @@ public class Panel_Browser extends JPanel
         // labelChrome.setEnabled(false);
         // chromeBtn.setEnabled(false);
 
-        chromeBtn.addActionListener(new ActionListener()
+        // chromeBtn.addActionListener(new ActionListener()
+        // {
+        //
+        // @Override
+        // public void actionPerformed(ActionEvent e)
+        // {
+        // chromeSelected = true;
+        // }
+        // });
+        //
+        // ieBtn.addActionListener(new ActionListener()
+        // {
+        //
+        // @Override
+        // public void actionPerformed(ActionEvent e)
+        // {
+        // chromeSelected = false;
+        // }
+        // });
+
+        chromeBtn.addItemListener(new ItemListener()
         {
-            
             @Override
-            public void actionPerformed(ActionEvent e)
+            public void itemStateChanged(ItemEvent paramItemEvent)
             {
-                chromeBrowserSelected = true;
+                if (chromeBtn.isSelected())
+                {
+                    chromeSelected = true;
+                    ieSelected = false;
+                }
+                else
+                {
+                    ieSelected = true;
+                    chromeSelected = false;
+                }
+                
+                System.out.print ("chrome = " + getChromeStatus() +", ");
+                System.out.println("ie = " + getIeStatus());
             }
         });
-        
-        ieBtn.addActionListener(new ActionListener()
-        {
-            
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                chromeBrowserSelected = false;
-            }
-        });
-        
+
+//        ieBtn.addItemListener(new ItemListener()
+//        {
+//            @Override
+//            public void itemStateChanged(ItemEvent paramItemEvent)
+//            {
+//                ieSelected = true;
+//                chromeSelected = false;
+//            }
+//        });
+
+
 
         add(labelChrome);
         add(chromeBtn);
@@ -120,22 +135,28 @@ public class Panel_Browser extends JPanel
 
     public static void setIeAccess(boolean status)
     {
-        labelIE.setEnabled(!status);
-        ieBtn.setEnabled(!status);
+        labelIE.setEnabled(status);
+        ieBtn.setEnabled(status);
     }
 
     public static void selectChromeBrowser()
     {
         chromeBtn.setSelected(true);
+        setChromeBrowserStatus(true);
     }
-    
-    public static boolean getChromeBrowserStatus()
+
+    public static boolean getChromeStatus()
     {
-        return chromeBrowserSelected;
+        return chromeSelected;
     }
-    
+
+    public static boolean getIeStatus()
+    {
+        return ieSelected;
+    }
+
     public static void setChromeBrowserStatus(boolean status)
     {
-        chromeBrowserSelected = status;
+        chromeSelected = status;
     }
 }

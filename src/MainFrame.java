@@ -10,6 +10,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame
 {
     private static Panel_Platform panel1;
@@ -20,8 +21,8 @@ public class MainFrame extends JFrame
     private static Panel_PDF_Folder panel6;
     private static Panel_Actions panel7;
 
-    private URL imageURL;
-    private ImageIcon titleIcon;
+    private static URL imageURL;
+    private static ImageIcon titleIcon;
 
     public MainFrame() throws IOException
     {
@@ -77,14 +78,14 @@ public class MainFrame extends JFrame
     {
         imageURL = this.getClass().getResource("mm.png");
 
-        if (imageURL == null)
-        {
-            titleIcon = new ImageIcon("img/mm.png");
-        }
-        else
-        {
+//        if (imageURL == null)
+//        {
+//            titleIcon = new ImageIcon("img/mm.png");
+//        }
+//        else
+//        {
             titleIcon = new ImageIcon(imageURL);
-        }
+//        }
 
         setIconImage(titleIcon.getImage());
     }

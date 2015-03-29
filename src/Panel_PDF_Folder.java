@@ -8,18 +8,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class Panel_PDF_Folder extends JPanel
 {
     private static JLabel pdfOutPathLabel;
     private static JButton changeFilePathBtn;
     private static String downloadPdfPath;
-    private static String curPath;
+    private static String pathString;
 
     public Panel_PDF_Folder()
     {
-        curPath = "Path: ";
+        pathString = "Path: ";
         setLayout(new GridLayout(2, 0));
-        pdfOutPathLabel = new JLabel(curPath + System.getProperty("user.home") + "\\Desktop\\");
+        pdfOutPathLabel = new JLabel(pathString + System.getProperty("user.home") + "\\Desktop\\");
+        downloadPdfPath = System.getProperty("user.home") + "\\Desktop\\";
         changeFilePathBtn = new JButton("Select destination folder");
 
         changeFilePathBtn.addActionListener(new ActionListener()
@@ -41,7 +43,7 @@ public class Panel_PDF_Folder extends JPanel
                     // System.out.println("getSelectedFile() : " +
                     // fileChooser.getSelectedFile());
                     downloadPdfPath = fileChooser.getSelectedFile().toString();
-                    pdfOutPathLabel.setText(curPath + downloadPdfPath + "\\");
+                    pdfOutPathLabel.setText(pathString + downloadPdfPath + "\\");
                 }
 
             }
@@ -52,4 +54,10 @@ public class Panel_PDF_Folder extends JPanel
         add(pdfOutPathLabel);
         add(changeFilePathBtn);
     }
+    
+    public static String getPdfFolderPath()
+    {
+        return downloadPdfPath;
+    }
+    
 }

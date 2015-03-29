@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class Panel_Actions extends JPanel
 {
     private static JButton storyManifestBtn;
@@ -102,40 +103,53 @@ public class Panel_Actions extends JPanel
             }
         });
 
-        
+
         pdfExportBtn.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if ( Panel_Platform.getDesktopStatus())
-                {
-                    System.out.print("Destop , ");
-                    if (Panel_Browser.getChromeBrowserStatus())
-                    {
-                        System.out.println("Chrome");
-                    } 
-                    else 
-                    {
-                        System.out.println("IE");
-                    }
-                }
-                else
-                {
-                    System.out.print("Server , ");
-                    if (Panel_Browser.getChromeBrowserStatus())
-                    {
-                        System.out.println("Chrome");
-                    } 
-                    else 
-                    {
-                        System.out.println("IE");
-                    }
-                }
+                // if ( Panel_Platform.getDesktopStatus())
+                // {
+                // System.out.print("Destop , ");
+                // if (Panel_Browser.getChromeStatus())
+                // {
+                // System.out.println("Chrome");
+                // }
+                // else
+                // {
+                // System.out.println("IE");
+                // }
+                // }
+                // else
+                // {
+                // System.out.print("Server , ");
+                // if (Panel_Browser.getChromeStatus())
+                // {
+                // System.out.println("Chrome");
+                // }
+                // else
+                // {
+                // System.out.println("IE");
+                // }
+                // }
+                System.out.println("------------------------------");
+                System.out.println("appendix = " + Setting.getAppendixOption());
+                System.out.println("mt option = " + Setting.getMtOption());
+                System.out.println("password = " + Setting.getPassword());
+                System.out.println("pdf down path = " + Setting.getPdfExportFolderPath());
+                System.out.println("lums folder = " + Setting.getTestAssetFolderPath());
+                System.out.println("number of threads = " + Setting.getThreadNumbers());
+                System.out.println("url = " + Setting.getURL());
+                System.out.println("username = " + Setting.getUsername());
+                System.out.println("browser = " + Setting.getBrowser());
+                System.out.println("platform = " + Setting.getPlatform());
+                System.out.println("-------------------------------");
+
             }
         });
-        
-        
+
+
         add(storyManifestBtn);
         add(pdfExportBtn);
     }

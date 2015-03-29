@@ -65,7 +65,7 @@ public class ServerExport
     private final static String IE_STRING = "IE";
     private final static String APPENDIX_BUTTON = "Export appendixes";
     private final static String OUT_FOLDER_SELECTION = "Select pdf output folder";
-    private final static String DEFAULT_DIR = "C:\\";
+    //private final static String DEFAULT_DIR = "C:\\";
     private final static String SELECT_PDFX_FOLDER_TITLE = "Select pdf file output folder";
     private final static String GENERAL_TITLE = "PDF export automation";
     private final static String POPUP_ERR_MSG = "Something is wrong";
@@ -361,10 +361,4 @@ public class ServerExport
         Thread.sleep(2000);
     }
 
-}
-
-
-enum Browser
-{
-    CHROME, IE
 }
