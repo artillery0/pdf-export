@@ -54,10 +54,10 @@ public class Panel_PDF_Folder extends JPanel
         add(pdfOutPathLabel);
         add(changeFilePathBtn);
     }
-    
+
     public static String getPdfFolderPath()
     {
         return downloadPdfPath;
     }
-    
+
 }

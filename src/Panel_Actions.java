@@ -25,7 +25,6 @@ public class Panel_Actions extends JPanel
 
         storyManifestBtn = new JButton("View story manifest");
         pdfExportBtn = new JButton("PDF export");
-
         manifestPath = System.getProperty("user.home") + "\\Desktop\\story_manifest.xml";
 
         storyManifestBtn.addActionListener(new ActionListener()
@@ -61,8 +60,16 @@ public class Panel_Actions extends JPanel
                         {
                             fileWriter.println("<stories>");
                         }
-                        int index = fileEntry.getName().toString().indexOf("_v"); // this needs to be changed if they change the naming convention
-                        fileWriter.println("   <story id=\"" + (xmlIndex + 1) + "\">" + fileEntry.getName().toString().substring(0, index) + "</story>");
+                        if (fileEntry.getName().toString().contains("_v"))
+                        {
+                            int index = fileEntry.getName().toString().indexOf("_v"); // this needs to be changed if they change the naming convention
+                            fileWriter.println("   <story id=\"" + (xmlIndex + 1) + "\">" + fileEntry.getName().toString().substring(0, index) + "</story>");
+                        }
+                        else
+                        {
+                            int index = fileEntry.getName().toString().indexOf(".lums");
+                            fileWriter.println("   <story id=\"" + (xmlIndex + 1) + "\">" + fileEntry.getName().toString().substring(0, index) + "</story>");
+                        }
 
                         xmlIndex++;
                     }
@@ -112,55 +119,34 @@ public class Panel_Actions extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                // if ( Panel_Platform.getDesktopStatus())
-                // {
-                // System.out.print("Destop , ");
-                // if (Panel_Browser.getChromeStatus())
-                // {
-                // System.out.println("Chrome");
-                // }
-                // else
-                // {
-                // System.out.println("IE");
-                // }
-                // }
-                // else
-                // {
-                // System.out.print("Server , ");
-                // if (Panel_Browser.getChromeStatus())
-                // {
-                // System.out.println("Chrome");
-                // }
-                // else
-                // {
-                // System.out.println("IE");
-                // }
-                // }
-                System.out.println("==============================");
-                
-                System.out.println("platform = " + Setting.getPlatform());
-                System.out.println("------------------------------");
-                
-                System.out.println("url = " + Setting.getURL());
-                System.out.println("username = " + Setting.getUsername());
-                System.out.println("password = " + Setting.getPassword());
-                System.out.println("------------------------------");
-                
-                System.out.println("browser = " + Setting.getBrowser());
-                System.out.println("------------------------------");
-                
-                System.out.println("appendix = " + Setting.getAppendixOption());
-                System.out.println("mt option = " + Setting.getMtOption());
-                System.out.println("number of threads = " + Setting.getThreadNumbers());
-                System.out.println("------------------------------");
-                
-                System.out.println("pdf down path = " + Setting.getPdfExportFolderPath());
-                System.out.println("------------------------------");
-                
-                System.out.println("lums folder = " + Setting.getTestAssetFolderPath());
-                
-                System.out.println("-------------------------------");
 
+                 //get settings
+                 System.out.println("==============================");
+                
+                 System.out.println("platform = " + Setting.getPlatform());
+                 System.out.println("------------------------------");
+                
+                 System.out.println("url = " + Setting.getURL());
+                 System.out.println("username = " + Setting.getUsername());
+                 System.out.println("password = " + Setting.getPassword());
+                 System.out.println("------------------------------");
+                
+                 System.out.println("browser = " + Setting.getBrowser());
+                 System.out.println("------------------------------");
+                
+                 System.out.println("appendix = " + Setting.getAppendixOption());
+                 System.out.println("mt option = " + Setting.getMtOption());
+                 System.out.println("number of threads = " + Setting.getThreadNumbers());
+                 System.out.println("------------------------------");
+                
+                 System.out.println("pdf down path = " + Setting.getPdfExportFolderPath());
+                 System.out.println("------------------------------");
+                
+                 System.out.println("lums folder = " + Setting.getTestAssetFolderPath());
+                
+                 System.out.println("-------------------------------");
+
+                 ThreadManager.run();
             }
         });
 
