@@ -250,12 +250,12 @@ public class ServerExport
         }
         catch (NoSuchElementException error)
         {
-            JOptionPane.showMessageDialog(new JFrame(), POPUP_ERR_MSG, "ERROR!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), POPUP_ERR_MSG, "no such element", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
         catch (WebDriverException error)
         {
-            JOptionPane.showMessageDialog(new JFrame(), POPUP_ERR_MSG, "ERROR!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), POPUP_ERR_MSG, "web driver error", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 
@@ -263,7 +263,7 @@ public class ServerExport
         // pdfExport(storyName, true, 40000);
         // }
 
-        webDriver.close();
+        webDriver.quit();
         System.out.println(">>>>>>>>>>>>>>>>>> PDF export safely finished");
     }
 
@@ -277,7 +277,7 @@ public class ServerExport
             // options.addArguments(maxmizeWindow);
             // webDriver = new ChromeDriver(options);
             // webDriver.navigate().to(lumiraServerURL);
-            System.setProperty(chromeDriverType, chromeDriverPath);
+            System.setProperty(chromeDriverType, "res/chromedriver.exe");
             // downloadFilepath = "c:\\selenium_test";
 
             HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -317,15 +317,13 @@ public class ServerExport
         usernameField.sendKeys(username);
         passwordField.sendKeys(password);
         loginButton.click();
-        Thread.sleep(3000);
+        Thread.sleep(12000);
     }
 
     private static void populateStoryList()
     {
-        storyNames.add("BarAndColumnCharts_AllStories");
-        storyNames.add("Infographic Test");
-        storyNames.add("Report Test");
-        storyNames.add("Board Test");
+        storyNames.add("stuff");
+        storyNames.add("dynamic_text_test");
     }
 
     private static void pdfExport(final String storyName, boolean addAppendix, int estimatedTimeToPublish) throws InterruptedException

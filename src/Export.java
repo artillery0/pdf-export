@@ -23,24 +23,26 @@ public class Export
     private WebDriver chromeDriver;
     private WebDriver webDriver;
     private static boolean flag = true;
+    private static boolean flag2 = true;
     private static DesiredCapabilities chromeCapability;
     private static DesiredCapabilities ieCapability;
 
     private static String storyBtn = "div[title='Stories']";
     private static String composeRoom = "a[aria-posinset='3']";
     private static String pdfDialog = "div[class='sapBiCommonWidgetsStyledDialog sapLumiraExportDialog sapUiDlg sapUiDlgContentBorderDesignNone sapUiDlgFlexHeight sapUiDlgFlexWidth sapUiDlgModal sapUiShd']";
-    private static String exportBtn = "button[class='sapUiBtn sapUiBtnAccept sapUiBtnNorm sapUiBtnS sapUiBtnStd']";
+    // private static String exportBtn = "button[class='sapUiBtn sapUiBtnAccept sapUiBtnNorm sapUiBtnS sapUiBtnStd']";
+    private static String exportBtn = "//button[contains(.,'Export')]";
     private static String appendixBtn = "span[title='Display in appendix']";
     private static String sep = System.getProperty("file.separator");
 
     private static WebElement usernameField;
     private static WebElement passwordField;
     private static WebElement loginButton;
-    
+
     private final static String username = "SYSTEM";
     private final static String password = "BOsap123";
-    
-    private static int timeout = 30;
+
+    private static int timeout = 60;
 
 
     public void excutePdfExport(String storyName) throws IOException, InterruptedException
@@ -49,13 +51,13 @@ public class Export
         {
             excuteDesktopExport(storyName);
         }
-        else
+        else if (Setting.getPlatform().equals(Platform.SERVER))
         {
             excuteServerExport(storyName);
         }
     }
 
-    public void excuteDesktopExport(String storyNameStr) throws InterruptedException, IOException
+    private void excuteDesktopExport(String storyNameStr) throws InterruptedException, IOException
     {
         if (flag)
         {
@@ -82,24 +84,41 @@ public class Export
             chromeCapability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
             chromeCapability.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
+
+            // chromeDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
+            System.out.println(this.getClass().getResource("chromedriver.exe").toString());
+            System.out.println(this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
+
+            if (this.getClass().getResource("chromedriver.exe").toString().contains("%20"))
+            {
+                System.setProperty("webdriver.chrome.driver", this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
+            }
+            else
+            {
+                URL url = this.getClass().getResource("chromedriver.exe");
+                File dest = new File(System.getProperty("user.home") + sep + "chromedriver.exe");
+                FileUtils.copyURLToFile(url, dest);
+                System.setProperty("webdriver.chrome.driver", System.getProperty("user.home") + sep + "chromedriver.exe");
+            }
+
             flag = false;
         }
 
-        // chromeDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
-        System.out.println(this.getClass().getResource("chromedriver.exe").toString());
-        System.out.println(this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
-
-        if (this.getClass().getResource("chromedriver.exe").toString().contains("%20"))
-        {
-            System.setProperty("webdriver.chrome.driver", this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
-        }
-        else
-        {
-            URL url = this.getClass().getResource("chromedriver.exe");
-            File dest = new File(System.getProperty("user.home") + sep + "chromedriver.exe");
-            FileUtils.copyURLToFile(url, dest);
-            System.setProperty("webdriver.chrome.driver", System.getProperty("user.home") + sep + "chromedriver.exe");
-        }
+        // // chromeDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
+        // System.out.println(this.getClass().getResource("chromedriver.exe").toString());
+        // System.out.println(this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
+        //
+        // if (this.getClass().getResource("chromedriver.exe").toString().contains("%20"))
+        // {
+        // System.setProperty("webdriver.chrome.driver", this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
+        // }
+        // else
+        // {
+        // URL url = this.getClass().getResource("chromedriver.exe");
+        // File dest = new File(System.getProperty("user.home") + sep + "chromedriver.exe");
+        // FileUtils.copyURLToFile(url, dest);
+        // System.setProperty("webdriver.chrome.driver", System.getProperty("user.home") + sep + "chromedriver.exe");
+        // }
 
         chromeDriver = new ChromeDriver(chromeCapability);
 
@@ -116,7 +135,7 @@ public class Export
         // story item in the story list
         driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("span[title=\"" + storyNameStr + "\"]")));
         // chromeDriver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-        System.out.println(storyNameStr);
+        System.out.println(" --- > testing " + storyNameStr + " ... ");
         WebElement story = chromeDriver.findElement(By.cssSelector("span[title=\"" + storyNameStr + "\"]"));
 
 
@@ -131,9 +150,11 @@ public class Export
         WebElement composeRoomElement = chromeDriver.findElement(By.cssSelector(composeRoom));
         composeRoomElement.click();
 
-        // Thread.sleep(5000); //--> wait for the central panel to load up
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='center-panel']")));
-        System.out.println("KEY SENT");
+        // wait for the central panel to load up
+        // Thread.sleep(500);
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='sapLumiraStoryComposerCenterArea sapUiBorderLayoutCenter']")));
+        // 'div[class="sapLumiraStoryComposerCenterArea sapUiBorderLayoutCenter"]'
+        System.out.println(storyNameStr + ": export key sent ");
         chromeDriver.findElement(By.xpath("//body")).sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, "x"));
 
 
@@ -148,78 +169,77 @@ public class Export
         {
             WebElement appendixRadioButton = chromeDriver.findElement(By.cssSelector(appendixBtn));
             appendixRadioButton.click();
-            Thread.sleep(500);
         }
 
         // export button -- click it
-
-        driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(exportBtn)));
-        Thread.sleep(500);
-        driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(exportBtn)));
-        Thread.sleep(500);
-        WebElement exportTextButton = chromeDriver.findElement(By.cssSelector(exportBtn));
-
-        // this wait time is important
-        Thread.sleep(500);
+        driverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(exportBtn)));
+        WebElement exportTextButton = chromeDriver.findElement(By.xpath(exportBtn));
         exportTextButton.click();
+        System.out.println(storyNameStr + " : Export Button clicked");
 
-        // driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#File-menuitem > span")));
-        // WebElement fileBtn = chromeDriver.findElement(By.cssSelector("#File-menuitem > span"));
-        // fileBtn.click();
+        // This is the wait time for pdf export
+        // TODO there should be a better way to do this
+        // driverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(exportBtn)));
+        driverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(pdfDialog)));
 
-        // Thread.sleep(1000);
+        // TODO this will be used later
+        // chromeDriver.navigate().refresh();
 
-        // System.out.println("performing F5");
-        // chromeDriver.findElement(By.xpath("//body")).sendKeys(Keys.chord(Keys.F5));
-
-        // webDriver.close();
-        // chromeDriver.quit();
-
+        // chromeDriver.close();
+        chromeDriver.quit();
 
 
-        System.out.println(" ----> " + storyNameStr + " thread has ended successfully!");
+
+        System.out.println(" ----> " + storyNameStr + " THREAD has ended successfully!");
     }
 
 
 
-    public void excuteServerExport(String storyName) throws IOException, InterruptedException
+    private void excuteServerExport(String storyName) throws IOException, InterruptedException
     {
-        if (Setting.getBrowser().equals(Platform.DESKTOP))
+        System.out.println(Setting.getBrowser());
+        if (Setting.getBrowser().equals(Browser.CHROME))
         {
-            HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-            chromePrefs.put("profile.default_content_settings.popups", 0);
-            chromePrefs.put("download.default_directory", Setting.getPdfExportFolderPath());
-
-            ChromeOptions chromeOptions = new ChromeOptions();
-            HashMap<String, Object> chromeOptionsMap = new HashMap<String, Object>();
-            chromeOptions.setExperimentalOption("prefs", chromePrefs);
-            chromeOptions.addArguments("--test-type");
-            chromeOptions.addArguments("--start-maximized");
-
-            DesiredCapabilities cap = DesiredCapabilities.chrome();
-            cap.setCapability(ChromeOptions.CAPABILITY, chromeOptionsMap);
-            cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            cap.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-           
-            System.out.println(this.getClass().getResource("chromedriver.exe").toString());
-            System.out.println(this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
-            
-            if (this.getClass().getResource("chromedriver.exe").toString().contains("%20"))
+            if (flag2 == true)
             {
-                System.setProperty("webdriver.chrome.driver", this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
+                HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+                chromePrefs.put("profile.default_content_settings.popups", 0);
+                chromePrefs.put("download.default_directory", Setting.getPdfExportFolderPath());
+
+                ChromeOptions chromeOptions = new ChromeOptions();
+                HashMap<String, Object> chromeOptionsMap = new HashMap<String, Object>();
+                chromeOptions.setExperimentalOption("prefs", chromePrefs);
+                chromeOptions.addArguments("--test-type");
+                chromeOptions.addArguments("--start-maximized");
+
+                chromeCapability = DesiredCapabilities.chrome();
+                chromeCapability.setCapability(ChromeOptions.CAPABILITY, chromeOptionsMap);
+                chromeCapability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                chromeCapability.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+
+                System.out.println(this.getClass().getResource("chromedriver.exe").toString());
+                System.out.println(this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
+
+                if (this.getClass().getResource("chromedriver.exe").toString().contains("%20"))
+                {
+                    System.setProperty("webdriver.chrome.driver", this.getClass().getResource("chromedriver.exe").toString().substring(5).replace("%20", " "));
+                }
+                else
+                {
+                    URL url = this.getClass().getResource("chromedriver.exe");
+                    File dest = new File(System.getProperty("user.home") + sep + "chromedriver.exe");
+                    FileUtils.copyURLToFile(url, dest);
+                    System.setProperty("webdriver.chrome.driver", System.getProperty("user.home") + sep + "chromedriver.exe");
+                }
+
+                flag2 = false;
             }
-            else
-            {
-                URL url = this.getClass().getResource("chromedriver.exe");
-                File dest = new File(System.getProperty("user.home") + sep + "chromedriver.exe");
-                FileUtils.copyURLToFile(url, dest);
-                System.setProperty("webdriver.chrome.driver", System.getProperty("user.home") + sep + "chromedriver.exe");
-            }
-          
-            webDriver = new ChromeDriver(cap);
+
+
+            webDriver = new ChromeDriver(chromeCapability);
             webDriver.get(Setting.getURL());
         }
-        else if (Setting.getBrowser().equals(Platform.SERVER))
+        else if (Setting.getBrowser().equals(Browser.IE))
         {
             HashMap<String, Object> iePrefs = new HashMap<String, Object>();
             iePrefs.put("profile.default_content_settings.popups", 0);
@@ -235,7 +255,7 @@ public class Export
             cap.setCapability(ChromeOptions.CAPABILITY, ieOptionsMap);
             cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
             cap.setCapability(ChromeOptions.CAPABILITY, ieOptions);
-            chromeDriver = new ChromeDriver(cap);
+            // webDriver = new InternetExplorerDriver(cap);
 
             System.out.println(this.getClass().getResource("IEDriverServer.exe").toString());
             System.out.println(this.getClass().getResource("IEDriverServer.exe").toString().substring(5).replace("%20", " "));
@@ -254,49 +274,70 @@ public class Export
 
             webDriver = new InternetExplorerDriver();
             webDriver.get(Setting.getURL());
-            
+
         }
-        
-        usernameField = webDriver.findElement(By.cssSelector("input[id=\"username\"]"));
-        passwordField = webDriver.findElement(By.cssSelector("input[id=\"password\"]"));
-        loginButton = webDriver.findElement(By.cssSelector("button[type=\"button\"]"));
+
+        WebDriverWait driverWait = new WebDriverWait(webDriver, timeout);
+        driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[id='username']")));
+
+        // Thread.sleep(2000);
+        usernameField = webDriver.findElement(By.cssSelector("input[id='username']"));
+        passwordField = webDriver.findElement(By.cssSelector("input[id='password']"));
+        loginButton = webDriver.findElement(By.cssSelector("button[type='button']"));
 
         usernameField.sendKeys(username);
         passwordField.sendKeys(password);
         loginButton.click();
-        Thread.sleep(3000);
+        Thread.sleep(12000);
 
-        WebElement testcase;
-        testcase = webDriver.findElement(By.cssSelector("span[title=\"" + storyName + "\"]"));
-        testcase.click();
-        Thread.sleep(5000);
+        System.out.println("span[title='" + storyName + "']");
+        // driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("span[title='" + storyName + "']")));
+        WebElement storyItem = webDriver.findElement(By.cssSelector("span[title='" + storyName + "']"));
+        storyItem.click();
+        // Thread.sleep(5000);
 
+        driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#explorerHeaderExportBtn")));
         WebElement exportIconButton = webDriver.findElement(By.cssSelector("#explorerHeaderExportBtn"));
         exportIconButton.click();
-        Thread.sleep(3000);
+        // Thread.sleep(3000);
 
         // the export dialog
-        WebElement exportDialog = webDriver.findElement(By.cssSelector("div[class=\"sapUiDlgCont\"]"));
+        driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[class='sapUiDlgCont']")));
+        WebElement exportDialog = webDriver.findElement(By.cssSelector("div[class='sapUiDlgCont']"));
         new Actions(webDriver).moveToElement(exportDialog);
         exportDialog.click();
         Thread.sleep(2000);
 
         if (Setting.getAppendixOption())
         {
-            WebElement appendixRadioButton = webDriver.findElement(By.cssSelector("span[title=\"Display in appendix\"]"));
+            driverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("span[title='Display in appendix']")));
+            WebElement appendixRadioButton = webDriver.findElement(By.cssSelector("span[title='Display in appendix']"));
             appendixRadioButton.click();
             Thread.sleep(1000);
         }
 
-        WebElement exportTextButton = webDriver.findElement(By.cssSelector("button[class=\"sapUiBtn sapUiBtnAccept sapUiBtnNorm sapUiBtnS sapUiBtnStd\"]"));
+        driverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(exportBtn)));
+        WebElement exportTextButton = webDriver.findElement(By.xpath(exportBtn));
         exportTextButton.click();
         Thread.sleep(4000);
 
         WebElement backButton = webDriver.findElement(By.cssSelector("#explorerHeaderBackBtn"));
         backButton.click();
         Thread.sleep(2000);
-        
-        
+
+
     }
+
+    public static void setFlag(boolean status)
+    {
+        flag = status;
+    }
+
+    public static boolean getFlagStatus()
+    {
+        return flag;
+    }
+
+
 
 }

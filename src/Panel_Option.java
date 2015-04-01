@@ -85,13 +85,13 @@ public class Panel_Option extends JPanel
                 if (!threadComboBox.isEnabled())
                 {
                     numberofthreads = 1;
-                    System.out.println(numberofthreads);
+                    System.out.println("number of thread is set back to " + numberofthreads);
                     threadComboBox.setSelectedIndex(0);
                 }
             }
         });
-        
-        
+
+
         appendixBtn.setSelected(true);
         multiThreadBtn.setSelected(false);
 
@@ -131,38 +131,39 @@ public class Panel_Option extends JPanel
         threadComboBox.setToolTipText("This combo box is for thread selection");
         ((JLabel) threadComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
-
+        
         threadComboBox.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                Export.setFlag(true);
                 JComboBox<?> comboBox = (JComboBox<?>) e.getSource();
                 switch (comboBox.getSelectedIndex())
                 {
                     case 0:
                         numberofthreads = 1;
-                        System.out.println(numberofthreads);
+                        System.out.println("number of threads = " + numberofthreads);
                         break;
                     case 1:
                         numberofthreads = 2;
-                        System.out.println(numberofthreads);
+                        System.out.println("number of threads = " + numberofthreads);
                         break;
                     case 2:
                         numberofthreads = 3;
-                        System.out.println(numberofthreads);
+                        System.out.println("number of threads = " + numberofthreads);
                         break;
                     case 3:
                         numberofthreads = 4;
-                        System.out.println(numberofthreads);
+                        System.out.println("number of threads = " + numberofthreads);
                         break;
                     case 4:
                         numberofthreads = 5;
-                        System.out.println(numberofthreads);
+                        System.out.println("number of threads = " + numberofthreads);
                         break;
                     default:
                         numberofthreads = 1;
-                        System.out.println(numberofthreads);
+                        System.out.println("number of threads = " + numberofthreads);
                         break;
                 }
             }
