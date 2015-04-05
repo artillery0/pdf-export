@@ -20,7 +20,7 @@ public class Panel_PDF_Folder extends JPanel
     {
         pathString = "Path: ";
         setLayout(new GridLayout(2, 0));
-        pdfOutPathLabel = new JLabel(pathString + System.getProperty("user.home") + "\\Desktop");
+        pdfOutPathLabel = new JLabel("Default Chrome Download Folder");
         downloadPdfPath = System.getProperty("user.home") + "\\Desktop";
         changeFilePathBtn = new JButton("Select destination folder");
 

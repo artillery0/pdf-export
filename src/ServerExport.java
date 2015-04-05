@@ -42,7 +42,7 @@ public class ServerExport
 {
     private final static String chromeDriverType = "webdriver.chrome.driver";
     private final static String ieDriverType = "webdriver.ie.driver";
-    private final static String chromeDriverPath = "C:\\chromedriver.exe";
+    // private final static String chromeDriverPath = "C:\\chromedriver.exe";
     private final static String ieDriverPath = "C:\\IEDriverServer.exe";
     private final static String lumiraServerURL = "hana:8000/sap/bi/launchpad";
     private final static String lumiraServerURL_IE = "http://" + lumiraServerURL;
@@ -65,7 +65,7 @@ public class ServerExport
     private final static String IE_STRING = "IE";
     private final static String APPENDIX_BUTTON = "Export appendixes";
     private final static String OUT_FOLDER_SELECTION = "Select pdf output folder";
-    //private final static String DEFAULT_DIR = "C:\\";
+    // private final static String DEFAULT_DIR = "C:\\";
     private final static String SELECT_PDFX_FOLDER_TITLE = "Select pdf file output folder";
     private final static String GENERAL_TITLE = "PDF export automation";
     private final static String POPUP_ERR_MSG = "Something is wrong";
@@ -287,7 +287,7 @@ public class ServerExport
             ChromeOptions chromeOptions = new ChromeOptions();
             HashMap<String, Object> chromeOptionsMap = new HashMap<String, Object>();
             chromeOptions.setExperimentalOption("prefs", chromePrefs);
-            chromeOptions.addArguments("--test-type");
+            chromeOptions.addArguments("test-type");
             chromeOptions.addArguments(maxmizeWindow);
 
             DesiredCapabilities cap = DesiredCapabilities.chrome();
@@ -296,7 +296,7 @@ public class ServerExport
             cap.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
             webDriver = new ChromeDriver(cap);
 
-            webDriver.navigate().to(lumiraServerURL);
+            webDriver.get(lumiraServerURL);
         }
         else if (browser.equals(Browser.IE))
         {

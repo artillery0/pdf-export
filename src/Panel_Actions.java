@@ -120,33 +120,35 @@ public class Panel_Actions extends JPanel
             public void actionPerformed(ActionEvent e)
             {
 
-                 //get settings
-                 System.out.println("==============================");
-                
-                 System.out.println("platform = " + Setting.getPlatform());
-                 System.out.println("------------------------------");
-                
-                 System.out.println("url = " + Setting.getURL());
-                 System.out.println("username = " + Setting.getUsername());
-                 System.out.println("password = " + Setting.getPassword());
-                 System.out.println("------------------------------");
-                
-                 System.out.println("browser = " + Setting.getBrowser());
-                 System.out.println("------------------------------");
-                
-                 System.out.println("appendix = " + Setting.getAppendixOption());
-                 System.out.println("mt option = " + Setting.getMtOption());
-                 System.out.println("number of threads = " + Setting.getThreadNumbers());
-                 System.out.println("------------------------------");
-                
-                 System.out.println("pdf down path = " + Setting.getPdfExportFolderPath());
-                 System.out.println("------------------------------");
-                
-                 System.out.println("lums folder = " + Setting.getTestAssetFolderPath());
-                
-                 System.out.println("-------------------------------");
+                // echo the settings
+                System.out.println("==============================");
 
-                 ThreadManager.run();
+                System.out.println("platform = " + Setting.getPlatform());
+                System.out.println("------------------------------");
+
+                System.out.println("url = " + Setting.getURL());
+                System.out.println("username = " + Setting.getUsername());
+                System.out.println("password = " + Setting.getPassword());
+                System.out.println("------------------------------");
+
+                System.out.println("browser = " + Setting.getBrowser());
+                System.out.println("------------------------------");
+
+                System.out.println("appendix = " + Setting.getAppendixOption());
+                System.out.println("mt option = " + Setting.getMtOption());
+                System.out.println("number of threads = " + Setting.getThreadNumbers());
+                System.out.println("------------------------------");
+
+                System.out.println("pdf down path = " + Setting.getPdfExportFolderPath());
+                System.out.println("------------------------------");
+
+                System.out.println("lums folder = " + Setting.getTestAssetFolderPath());
+
+                System.out.println("-------------------------------");
+
+
+                ThreadManager.run();
+
             }
         });
 

@@ -25,25 +25,27 @@ public class Panel_Option extends JPanel
 
     private static JCheckBox appendixBtn;
     private static JCheckBox multiThreadBtn;
+    private static JCheckBox htmlBtn;
     private static JComboBox<String> threadComboBox;
     private static JPanel subPanel;
 
 
     public Panel_Option()
     {
-        setLayout(new GridLayout(0, 3));
+        setLayout(new GridLayout(2, 2));
         setupComboBox();
 
         appendixBtn = new JCheckBox("Add Appendices");
         multiThreadBtn = new JCheckBox("Multi-threading");
-
-
+        htmlBtn = new JCheckBox("HTML Export");
+        htmlBtn.setEnabled(false);
 
         appendixBtn.addItemListener(new ItemListener()
         {
             @Override
             public void itemStateChanged(ItemEvent paramItemEvent)
             {
+                Export.setDesktopFlag(true);
                 if (appendixBtn.isSelected())
                 {
                     appendixEnabled = true;
@@ -103,6 +105,7 @@ public class Panel_Option extends JPanel
 
         add(appendixBtn);
         add(multiThreadBtn);
+        add(htmlBtn);
         add(subPanel);
     }
 
@@ -131,13 +134,13 @@ public class Panel_Option extends JPanel
         threadComboBox.setToolTipText("This combo box is for thread selection");
         ((JLabel) threadComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
-        
+
         threadComboBox.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Export.setFlag(true);
+                Export.setDesktopFlag(true);
                 JComboBox<?> comboBox = (JComboBox<?>) e.getSource();
                 switch (comboBox.getSelectedIndex())
                 {
