@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="src" path="img"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/alexlu/selenium-java-2.45.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/alexlu/selenium-server-standalone-2.45.0.jar"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
